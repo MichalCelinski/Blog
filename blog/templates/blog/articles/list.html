@@ -1,0 +1,16 @@
+{% extends "blog/base.html" %}
+{% block title %}Wspólny mianownik wywiady{% endblock %}
+{% block content %}
+  <h1>Wspólny mianownik wywiady</h1>
+  {% for article in articles %}
+    <h2>
+      <a href="{{ article.get_absolute_url }}">
+        {{ article.title }}
+      </a>
+    </h2>
+    <p class="date">
+      Opublikowany {{ article.publish }} przez {{ article.author }}
+    </p>
+    {{ article.article|truncatewords:50|linebreaks }}
+  {% endfor %}
+{% endblock %}
