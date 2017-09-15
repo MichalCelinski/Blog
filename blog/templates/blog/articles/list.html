@@ -1,16 +1,45 @@
 {% extends "blog/base.html" %}
 {% block title %}Wspólny mianownik wywiady{% endblock %}
 {% block content %}
-  <h1>Wspólny mianownik wywiady</h1>
-  {% for article in articles %}
-    <h2>
-      <a href="{{ article.get_absolute_url }}">
+<h1 class="jumbotron p-3 mb-2 bg-info text-white">Wspólny mianownik wywiady</h1>
+{% for article in articles %}
+<h2>
+    <a href="{{ article.get_absolute_url }}" class="text-info">
         {{ article.title }}
-      </a>
-    </h2>
-    <p class="date">
-      Opublikowany {{ article.publish }} przez {{ article.author }}
-    </p>
+    </a>
+</h2>
+<p class="text-secondary">
+    Opublikowany {{ article.publish }} przez {{ article.author }}
+</p>
+<p>
     {{ article.article|truncatewords:50|linebreaks }}
-  {% endfor %}
+    <a href="{{ article.get_absolute_url }}" class="text-info text-left font-italic">
+        czytaj więcej
+    </a>
+    <br><br>
+</p>
+{% endfor %}
+
+<nav>
+    <span class="pagination justify-content-center">
+        {% if articles.has_previous %}
+            <li><a class="page-link" href="?page={{ articles.previous_page_number }}">Poprzednia</a></li>
+        {% endif %}
+        {% for number in articles.paginator.page_range %}
+            {% if articles.number == number %}
+                <li class="page-item active">
+                    <span class="page-link">{{ number }}
+                        <span class="sr-only">(current)</span>
+                    </span>
+                </li>
+            {% else %}
+                <li class="page-item"><a class="page-link" href="?page={{ number }}">{{ number }}</a></li>
+            {% endif %}
+        {% endfor %}
+        {% if articles.has_next %}
+            <li><a class="page-link" href="?page={{ articles.next_page_number }}">Następna</a></li>
+        {% endif %}
+    </ul>
+</nav>
+
 {% endblock %}
