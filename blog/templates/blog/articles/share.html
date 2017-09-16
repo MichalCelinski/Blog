@@ -1,0 +1,29 @@
+{% extends "blog/base.html" %}
+{% block title %}Udostępnij post{% endblock %}
+{% block content %}
+
+{% if sent %}
+    <h1>Wiadomość e-mail została wysłana</h1>
+        <p>
+            Wysłanie posta "{{ article.title }}" do {{ cd.email_receiver }} zakończyło się sukcesem.
+        </p>
+{% else %}
+    <h3 class="jumbotron p-3 mb-2 bg-info text-white">Udostępnij "{{ article.title }}" przez e-mail</h3>
+    <div>
+        <form action="." method="post">
+            {% for field in form %}
+                <div class="form-group has-errors text-danger small">
+                    {{field.errors}}
+                </div>
+                <div class="form-group has-errors text-danger small">
+                </div>
+                <div class="form-group">
+                    {{field}}
+                </div>
+            {% endfor %}
+            {% csrf_token %}
+            <input type="submit" value="Wyślij wiadomość e-mail" class="btn btn-info">
+        </form>
+    </div>
+{% endif %}
+{% endblock %}

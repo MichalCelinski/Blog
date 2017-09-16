@@ -1,9 +1,16 @@
 {% extends "blog/base.html" %}
 {% block title %}{{ article.title }}{% endblock %}
 {% block content %}
-  <h1 class="jumbotron p-3 mb-2 bg-info text-white">{{ article.title }}</h1>
-  <p class="text-secondary">
+<h1 class="jumbotron p-3 mb-2 bg-info text-white">{{ article.title }}</h1>
+<p class="text-secondary">
     Opublikowany {{ article.publish_date }} przez {{ article.author }}
-  </p>
-  {{ article.article|linebreaks }}
+</p>
+<p>
+    {{ article.article|linebreaks }}
+</p>
+<p>
+    <a href="{% url 'blog:article_share' article.pk %}" class="btn btn-secondary">
+        Udostępnij ten artykuł via e-mail
+    </a>
+</p>
 {% endblock %}
