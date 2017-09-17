@@ -3,8 +3,9 @@ from django.views import View
 from .models import Article
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from .forms import EmailArticleForm
-from myblog.local_settings import EMAIL_HOST_USER
-from django.core.mail import send_mail
+from myblog.local_settings import EMAIL_HOST_USER, EMAIL_HOST_PASSWORD
+import smtplib
+from email.mime.text import MIMEText
 
 
 class ArticlesListView(View):
@@ -41,9 +42,18 @@ def article_share(request, article_id):
         if form.is_valid():
             cd = form.cleaned_data
             article_url = request.build_absolute_uri(article.get_absolute_url())
-            subject = '{} zaprasza do lektury "{}"'.format(cd['sender'], article.title)
-            message = 'przeczytaj {}'.format(article_url)
-            send_mail(subject, message, EMAIL_HOST_USER, [cd['email_receiver']])
+            message = MIMEText(u'Przeczytaj <a href="{}">{}</a><br>dodatkowa wiadomość: {}'
+                               .format(article_url, article_url, cd['message']), 'html')
+            message['Subject'] = '{} zaprasza do lektury "{}"'.format(cd['sender'], article)
+            message['From'] = cd['sender']
+            message['To'] = cd['email_receiver']
+            smtp_server = smtplib.SMTP('smtp.gmail.com:587')
+            smtp_server.ehlo()
+            smtp_server.starttls()
+            smtp_server.ehlo()
+            smtp_server.login(EMAIL_HOST_USER, EMAIL_HOST_PASSWORD)
+            smtp_server.sendmail(EMAIL_HOST_USER, cd['email_receiver'], message.as_string())
+            smtp_server.quit()
             sent = True
     else:
         form = EmailArticleForm()
