@@ -12,3 +12,13 @@ class EmailArticleForm(forms.Form):
                               required=False,
                               widget=forms.Textarea(attrs={'class': 'form-control',
                                                            'placeholder': 'Jeśli chcesz wpisz tutaj treść wiadomości'}))
+
+
+class CommentArticleForm(forms.Form):
+    name = forms.CharField(max_length=25, widget=forms.TextInput(attrs={'class': 'form-control',
+                                                                        'placeholder': 'Twoje Imię'}))
+    email = forms.EmailField(widget=forms.EmailInput(attrs={'class': 'form-control',
+                                                            'placeholder': 'Twój adres e-mail'}))
+    comment = forms.CharField(max_length=200,
+                              widget=forms.Textarea(attrs={'class': 'form-control',
+                                                           'placeholder': 'wpisz tutaj treść komentarza'}))

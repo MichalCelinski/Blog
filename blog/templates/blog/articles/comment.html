@@ -1,27 +1,27 @@
 {% extends "blog/base.html" %}
-{% block title %}Udostępnij post{% endblock %}
+{% block title %}Dodaj nowy komentarz{% endblock %}
 {% block content %}
 
-{% if sent %}
+{% if added %}
 <div class="alert alert-success" role="alert">
     <h4 class="alert-heading">Sukces!</h4>
     <hr>
-    <p>Wiadomość e-mail została wysłana.</p>
+    <p>Komentarz został dodany</p>
 </div>
 <p>
     <a href="{{ article_url }}" class="btn btn-success">Wróć do artykułu</a>
 </p>
 {% else %}
-<h3 class="jumbotron p-3 mb-2 bg-info text-white">Udostępnij "{{ article.title }}" przez e-mail</h3>
+<h2 class="jumbotron p-3 mb-2 bg-info text-white">Dodaj nowy komentarz</h2>
 <div>
     <form action="." method="post">
-        {% for field in form %}
+        {% for field in comment_form %}
         <div class="form-group">
             {{field}}
         </div>
         {% endfor %}
         {% csrf_token %}
-        <input type="submit" value="Wyślij wiadomość e-mail" class="btn btn-info">
+        <input type="submit" value="Dodaj komentarz" class="btn btn-info">
     </form>
 </div>
 {% endif %}
