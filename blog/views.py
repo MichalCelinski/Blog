@@ -48,12 +48,10 @@ class ArticleCommentView(View):
         added = False
         if comment_form.is_valid():
             cleaned_data = comment_form.cleaned_data
-            new_comment = Comment()
-            new_comment.name = cleaned_data['name']
-            new_comment.email = cleaned_data['email']
-            new_comment.comment = cleaned_data['comment']
-            new_comment.article = article
-            new_comment.save()
+            new_comment = Comment.objects.create(name=cleaned_data['name'],
+                                                 email=cleaned_data['email'],
+                                                 comment=cleaned_data['comment'],
+                                                 article=article)
             added = True
         context = {'added': added, 'article_url': article_url}
         return render(request, 'blog/articles/comment.html', context)

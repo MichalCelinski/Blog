@@ -15,7 +15,7 @@ admin.site.register(Article, ArticleAdmin)
 
 class CommentAdmin(admin.ModelAdmin):
     list_display = ('name', 'email', 'article', 'created', 'active')
-    list_filter = ('active', 'created', 'updated')
+    list_filter = ('created', 'active', 'updated')
     search_fields = ('name', 'email', 'comment')
 
 admin.site.register(Comment, CommentAdmin)

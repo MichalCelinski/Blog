@@ -38,10 +38,10 @@ class Comment(models.Model):
     comment = models.TextField()
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
-    active = models.BooleanField(default=False)
+    active = models.BooleanField(default=True)
 
     class Meta:
-        ordering = ('created',)
+        ordering = ('-created',)
 
     def __str__(self):
         return 'Komentarz {} do artykułu {}'.format(self.comment, self.article)
