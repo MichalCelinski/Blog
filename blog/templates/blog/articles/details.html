@@ -5,6 +5,14 @@
 <p class="text-secondary">
     Opublikowany {{ article.publish_date }} przez {{ article.author }}
 </p>
+<p class="text-muted"> Tagi:
+    {% for tag in article.tags.all %}
+    <a href="{% url 'blog:articles_list_by_tag' tag.slug %}" class="text-secondary">
+      {{ tag.name }}
+    </a>
+    {% if not forloop.last %}, {% endif %}
+  {% endfor %}
+</p>
 <p>
     {{ article.article|linebreaks }}
 </p>

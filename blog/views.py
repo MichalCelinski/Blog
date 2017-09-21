@@ -4,6 +4,7 @@ from django.views import View
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from .forms import CommentArticleForm, EmailArticleForm
 from .services import send_article
+from taggit.models import Tag
 
 
 class ArticlesListView(View):
@@ -19,6 +20,23 @@ class ArticlesListView(View):
         except EmptyPage:
             articles = paginator.page(paginator.num_pages)
         context = {'articles': articles}
+        return render(request, 'blog/articles/list.html', context)
+
+
+class ArticlesListbyTagView(View):
+
+    def get(self, request, tag_slug):
+        tag = get_object_or_404(Tag, slug=tag_slug)
+        articles_list = Article.objects.filter(article_status='published', tags__in=[tag])
+        paginator = Paginator(articles_list, 2)
+        page = request.GET.get('page')
+        try:
+            articles = paginator.page(page)
+        except PageNotAnInteger:
+            articles = paginator.page(1)
+        except EmptyPage:
+            articles = paginator.page(paginator.num_pages)
+        context = {'articles': articles, 'tag': tag}
         return render(request, 'blog/articles/list.html', context)
 
 

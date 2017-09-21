@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
 from django.core.urlresolvers import reverse
+from taggit.managers import TaggableManager
 
 
 ARTICLE_STATUS = (
@@ -19,6 +20,7 @@ class Article(models.Model):
     create_date = models.DateTimeField(auto_now_add=True)
     update_date = models.DateTimeField(auto_now=True)
     article_status = models.CharField(max_length=20, choices=ARTICLE_STATUS, default='draft')
+    tags = TaggableManager()
 
     class Meta:
         ordering = ('-publish_date',)
