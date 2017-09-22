@@ -15,7 +15,7 @@
     {% endfor %}
 </p>
 <p>
-    {{ article.article|linebreaks }}
+    {{ article.article|safe }}
 </p>
 <p>
     <a href="{% url 'blog:article_share' article.pk %}" class="btn btn-secondary">

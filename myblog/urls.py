@@ -22,4 +22,5 @@ urlpatterns = [
                            namespace='blog',
                            app_name='blog'
                            )),
+    url(r'^tinymce/', include('tinymce.urls')),
 ]

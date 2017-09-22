@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 from django.core.urlresolvers import reverse
 from taggit.managers import TaggableManager
+from tinymce.models import HTMLField
 
 
 ARTICLE_STATUS = (
@@ -15,7 +16,7 @@ class Article(models.Model):
     title = models.CharField(max_length=50)
     slug = models.SlugField(max_length=50, unique_for_date='publish_date')
     author = models.ForeignKey(User, related_name='blog_article')
-    article = models.TextField()
+    article = HTMLField()
     publish_date = models.DateTimeField(default=timezone.now)
     create_date = models.DateTimeField(auto_now_add=True)
     update_date = models.DateTimeField(auto_now=True)
