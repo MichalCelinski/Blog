@@ -2,22 +2,22 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>{% block title %}{% endblock %}</title>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css"
-        integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css"
+          integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
 </head>
 <body>
 <div class="container">
-  <div class="row">
-    <div class="col-sm-8">
-      {% block content %}
-      {% endblock %}
+    <div class="row">
+        <div class="col-sm-8">
+            {% block content %}
+            {% endblock %}
+        </div>
+        <div class="col-sm-4 jumbotron border">
+            <h2>Taki tam blog</h2>
+            <p>Z tekstami ze wspólnego mianownika</p>
+        </div>
     </div>
-    <div class="col-sm-4 jumbotron border">
-      <h2>Taki tam blog</h2>
-      <p>Z tekstami ze wspólnego mianownika</p>
-  </div>
-  </div>
 </div>
 </body>
 </html>

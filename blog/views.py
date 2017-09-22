@@ -5,6 +5,7 @@ from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from .forms import CommentArticleForm, EmailArticleForm
 from .services import send_article
 from taggit.models import Tag
+from django.db.models import Count
 
 
 class ArticlesListView(View):
@@ -45,8 +46,12 @@ class ArticleView(View):
     def get(self, request, slug):
         article = get_object_or_404(Article, slug=slug)
         comments = article.comments.filter(active=True)
+        article_tags_ids = article.tags.values_list('id', flat=True)
+        similar_articles = Article.objects.filter(tags__in=article_tags_ids).exclude(id=article.id)
+        similar_articles = similar_articles.annotate(same_tags=Count('tags')).order_by('-same_tags', '-publish_date')[:2]
         context = {'article': article,
-                   'comments': comments}
+                   'comments': comments,
+                   'similar_articles': similar_articles}
         return render(request, 'blog/articles/details.html', context)
 
 
