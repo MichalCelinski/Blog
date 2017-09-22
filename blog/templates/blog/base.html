@@ -1,3 +1,4 @@
+{% load blog_tags %}
 {% load staticfiles %}
 <!DOCTYPE html>
 <html>
@@ -14,8 +15,21 @@
             {% endblock %}
         </div>
         <div class="col-sm-4 jumbotron border">
-            <h2>Taki tam blog</h2>
-            <p>Z tekstami ze wspólnego mianownika</p>
+            <h4>Taki tam blog z tekstami ze wspólnego mianownika</h4>
+            <p> Dotychczas opublikowałem {% total_articles %} artykułów. </p>
+            <hr>
+            <h5>Najnowsze posty</h5>
+            {% show_latest_articles 3 %}
+            <hr>
+            <h5>Najczęściej komentowane posty</h5>
+            {% get_most_commented_articles as most_commented_articles %}
+            <ul>
+                {% for article in most_commented_articles %}
+                <li>
+                    <a href="{{ article.get_absolute_url }}" class="text-secondary">{{ article.title }}</a>
+                </li>
+                {% endfor %}
+            </ul>
         </div>
     </div>
 </div>
